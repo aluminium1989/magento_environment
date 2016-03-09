@@ -1,0 +1,6 @@
+# ignore magento installations
+magento*/
+# ignore vendor dir
+vendor/
+#ignore composer lock
+composer.lock

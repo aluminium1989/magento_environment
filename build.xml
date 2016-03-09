@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Cymbio" default="main">
+    <property name="workspace" value="."/>
+    <property name="vendordir" value="${workspace}/vendor"/>
+    <property name="n98dir" value="${vendordir}/n98"/>
+    <property name="magerun" value="${n98dir}/n98-magerun.phar"/>
+
+    <property file="build.properties" override="true"/>
+
+    <!-- ============================================ -->
+    <!-- Target: prepare -->
+    <!-- ============================================ -->
+    <target name="prepare">
+        <echo msg="Making directories ./build"/>
+    </target>
+
+    <target name="composer_cc">
+        <exec command="composer.phar clear-cache"/>
+    </target>
+
+    <target name="n98_install" depends="composer_cc">
+        <exec command="composer.phar -- create-project n98/magerun ${n98dir}" passthru="true"/>
+        <chmod file="${magerun}" mode="+x"/>
+        <exec command="chmod a+x "/>
+    </target>
+
+    <target name="n98_update">
+        <exec command="${magerun} self-update" />
+    </target>
+
+    <target name="setup_magento" depends="composer_cc">
+        <property name="version" value="${instances.${mage}.version}"/>
+        <property name="folder" value="${instances.${mage}.folder}"/>
+
+        <echo msg="Magento version ${mage} installation"/>
+        <input propertyname="db.name" defaultValue="${mage}">Db name:</input>
+        <input propertyname="db.user" defaultValue="root">Db user:</input>
+        <input propertyname="db.password" defaultValue="">Db password:</input>
+        <input propertyName="db.port" defaultValue="3306">Db port:</input>
+        <input propertyname="domain" defaultValue="http://${mage}.local">Domain:</input>
+
+        <property name="install-command" value="${magerun} install
+        --dbHost=localhost
+        --dbUser=${db.user}
+        --dbPass=${db.password}
+        --dbName=${db.name}
+        --dbPort=${db.port}
+        --baseUrl=${domain}
+        --magentoVersionByName=${version}
+        --installationFolder=${folder}
+        --useDefaultConfigParams=yes
+        --installSampleData=yes" />
+
+        <echo msg="${install-command}" />
+        <exec passthru="true" command="${install-command}" />
+    </target>
+
+    <target name="setup_project" depends="n98_update">
+        <copy file=".n98-magerun.yaml" todir="~/" />
+        <foreach list="${instances.versions}" param="mage" target="setup_magento" />
+    </target>
+
+    <target name="n98_run">
+        <exec command="${magerun}"/>
+    </target>
+    <!-- ============================================ -->
+    <!-- Target: build -->
+    <!-- ============================================ -->
+    <target name="build" depends="prepare">
+    </target>
+</project>

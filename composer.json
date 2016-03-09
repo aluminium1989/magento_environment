@@ -1,0 +1,12 @@
+{
+    "name": "root/cymbio",
+    "authors": [
+        {
+            "name": "Oleg Malichenko",
+            "email": "omalichenko@magecore.com"
+        }
+    ],
+  "require-dev": {
+    "phing/phing": "2.*"
+  }
+}
