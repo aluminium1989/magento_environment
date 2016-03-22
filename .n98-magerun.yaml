@@ -17,11 +17,13 @@ commands:
           url: git@github.com:magecorelab/magento-ee.git
           type: git
           reference: 1.14
-        extra: sample-data-1.1.2
+        extra:
+          sample-data: sample-data-1.1.2
       - name: magecorelab-magento-ee-1.12
         version: 1.12
         source:
           url: git@github.com:magecorelab/magento-ee.git
           type: git
           reference: 1.12
-        extra: sample-data-1.1.2
+        extra:
+          sample-data: sample-data-1.1.2
