@@ -69,7 +69,7 @@
         <exec command="composer.phar update -d ${magefolder}/" passthru="true" />
         <phingcall target="n98_run">
             <property name="dir" value="${magefolder}/" />
-            <property name="command" value="cache:clean" />
+            <property name="command" value="cache:flush" />
         </phingcall>
     </target>
 
@@ -83,6 +83,7 @@
     </target>
 
     <target name="n98_run">
+        <echo msg="${magerun} --root-dir='${dir}' ${command}" />
         <exec command="${magerun} --root-dir='${dir}' ${command} "/>
     </target>
     <!-- ============================================ -->
