@@ -1,10 +1,16 @@
-instances.versions = magento16,magento18,magento19
+instances.versions = magento112,magento114
 
 instances.magento16.version = magento-mirror-1.6.2.0
-instances.magento16.folder = ./cymbio16.intra.orocrm.com
+instances.magento16.folder = /../cymbio16.intra.orocrm.com
 
 instances.magento18.version = magento-mirror-1.8.1.0
-instances.magento18.folder = ./cymbio17.intra.orocrm.com
+instances.magento18.folder = /../cymbio17.intra.orocrm.com
 
 instances.magento19.version = magento-mirror-1.9.2.3
-instances.magento19.folder = ./cymbio19.intra.orocrm.com
+instances.magento19.folder = /../cymbio19.intra.orocrm.com
+
+instances.magento112.version = magecorelab-magento-ee-1.12
+instances.magento112.folder = /../cymbio112.intra.orocrm.com
+
+instances.magento114.version = magecorelab-magento-ee-1.14
+instances.magento114.folder = /../cymbio114.intra.orocrm.com
