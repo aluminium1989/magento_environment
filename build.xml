@@ -78,7 +78,7 @@
         <phingcall target="composer_cc">
             <property name="dir" value="${magefolder}" />
         </phingcall>
-        <exec command="composer.phar update -d ${magefolder}/" />
+        <exec command="composer.phar update -d ${magefolder}/" passthru="true" />
     </target>
 
     <target name="migrate_composer">
