@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Cymbio" default="main">
     <property name="workspace" value="."/>
+    <resolvepath propertyName="workspace" file="${workspace}"/>
     <property name="vendordir" value="${workspace}/vendor"/>
     <property name="n98dir" value="${vendordir}/n98"/>
     <property name="magerun" value="${n98dir}/n98-magerun.phar"/>
@@ -29,8 +30,9 @@
 
     <target name="n98_install" depends="composer_cc">
         <exec command="composer.phar -- create-project n98/magerun ${n98dir}" passthru="true"/>
-        <chmod file="${magerun}" mode="+x"/>
-        <exec command="chmod a+x "/>
+        <exec executable="chmod" dir="${magerun}">
+            <arg line="+x" />
+        </exec>
     </target>
 
     <target name="n98_update">
@@ -39,7 +41,7 @@
 
     <target name="setup_magento" depends="composer_cc">
         <property name="version" value="${instances.${mage}.version}"/>
-        <property name="folder" value="${instances.${mage}.folder}"/>
+        <property name="folder" value="${workspace}${instances.${mage}.folder}"/>
 
         <echo msg="Magento version ${mage} installation"/>
         <input propertyname="db.name" defaultValue="${mage}">Db name:</input>
@@ -57,7 +59,7 @@
         --dbPort=${db.port}
         --baseUrl=${domain}
         --magentoVersionByName=${version}
-        --installationFolder=${folder}
+        --installationFolder= ${folder}
         --useDefaultConfigParams=${sample}
         --installSampleData=${sample}"/>
 
