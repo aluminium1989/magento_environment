@@ -79,6 +79,10 @@
             <property name="dir" value="${magefolder}" />
         </phingcall>
         <exec command="composer.phar update -d ${magefolder}/" passthru="true" />
+        <phingcall target="n98_run">
+            <property name="dir" value="${magefolder}/" />
+            <property name="command" value="cache:clean" />
+        </phingcall>
     </target>
 
     <target name="migrate_composer">
@@ -91,7 +95,7 @@
     </target>
 
     <target name="n98_run">
-        <exec command="${magerun}"/>
+        <exec command="${magerun} --root-dir='${dir}' ${command} "/>
     </target>
     <!-- ============================================ -->
     <!-- Target: build -->
