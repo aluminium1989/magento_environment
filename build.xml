@@ -59,7 +59,7 @@
         --dbPort=${db.port}
         --baseUrl=${domain}
         --magentoVersionByName=${version}
-        --installationFolder= ${folder}
+        --installationFolder='${folder}'
         --useDefaultConfigParams=${sample}
         --installSampleData=${sample}"/>
 
