@@ -68,7 +68,7 @@
     </target>
 
     <target name="migrate_magento_composer">
-        <property name="magefolder" value="${instances.${mage}.folder}" />
+        <property name="magefolder" value="${workspace}${instances.${mage}.folder}" />
         <property name="dest" value="${magefolder}/composer.json"/>
 
         <echo msg="echo ${mage}"/>
