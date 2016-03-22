@@ -4,7 +4,7 @@
     <property name="vendordir" value="${workspace}/vendor"/>
     <property name="n98dir" value="${vendordir}/n98"/>
     <property name="magerun" value="${n98dir}/n98-magerun.phar"/>
-
+    <property name="magecomposer" value="./composer.json.htdocs"/>
     <property file="build.properties" override="true"/>
 
     <!-- ============================================ -->
@@ -15,7 +15,16 @@
     </target>
 
     <target name="composer_cc">
-        <exec command="composer.phar clear-cache"/>
+        <if>
+            <not>
+                <isset property="dir" />
+            </not>
+            <then>
+                <property name="dir" value="./" />
+            </then>
+        </if>
+
+        <exec command="composer.phar clear-cache -d ${dir}"/>
     </target>
 
     <target name="n98_install" depends="composer_cc">
@@ -25,7 +34,7 @@
     </target>
 
     <target name="n98_update">
-        <exec command="${magerun} self-update" />
+        <exec command="${magerun} self-update"/>
     </target>
 
     <target name="setup_magento" depends="composer_cc">
@@ -38,6 +47,7 @@
         <input propertyname="db.password" defaultValue="">Db password:</input>
         <input propertyName="db.port" defaultValue="3306">Db port:</input>
         <input propertyname="domain" defaultValue="http://${mage}.local">Domain:</input>
+        <input propertyname="sample" defaultValue="yes" validArgs="yes,no">Install sample data:</input>
 
         <property name="install-command" value="${magerun} install
         --dbHost=localhost
@@ -48,16 +58,34 @@
         --baseUrl=${domain}
         --magentoVersionByName=${version}
         --installationFolder=${folder}
-        --useDefaultConfigParams=yes
-        --installSampleData=yes" />
+        --useDefaultConfigParams=${sample}
+        --installSampleData=${sample}"/>
 
-        <echo msg="${install-command}" />
-        <exec passthru="true" command="${install-command}" />
+        <echo msg="${install-command}"/>
+        <exec passthru="true" command="${install-command}"/>
+    </target>
+
+    <target name="migrate_magento_composer">
+        <property name="magefolder" value="${instances.${mage}.folder}" />
+        <property name="dest" value="${magefolder}/composer.json"/>
+
+        <echo msg="echo ${mage}"/>
+        <echo msg="echo ${magefolder}"/>
+        <echo msg="echo ${dest}"/>
+        <copy file="${magecomposer}" tofile="${dest}" overwrite="true" />
+        <phingcall target="composer_cc">
+            <property name="dir" value="${magefolder}" />
+        </phingcall>
+        <exec command="composer.phar update -d ${magefolder}/" />
+    </target>
+
+    <target name="migrate_composer">
+        <foreach list="${instances.versions}" param="mage" target="migrate_magento_composer"/>
     </target>
 
     <target name="setup_project" depends="n98_update">
-        <copy file=".n98-magerun.yaml" todir="~/" />
-        <foreach list="${instances.versions}" param="mage" target="setup_magento" />
+        <copy file=".n98-magerun.yaml" todir="${user.home}" overwrite="true"/>
+        <foreach list="${instances.versions}" param="mage" target="setup_magento"/>
     </target>
 
     <target name="n98_run">

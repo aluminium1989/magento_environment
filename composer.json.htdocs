@@ -1,0 +1,25 @@
+{
+  "require": {
+    "magento-hackathon/magento-composer-installer": "*",
+    "magecorelab/cymbio_search": "dev-develop@dev"
+  },
+  "repositories": [
+    {
+      "packagist": false
+    },
+    {
+      "type": "composer",
+      "url": "https://packages.firegento.com"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:magecorelab/cymbio_search.git"
+    }
+  ],
+  "extra": {
+    "magento-root-dir": "./",
+    "magento-deploystrategy": "copy"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable" : true
+}

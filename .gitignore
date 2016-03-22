@@ -4,3 +4,4 @@ magento*/
 vendor/
 #ignore composer lock
 composer.lock
+build.properties
