@@ -58,7 +58,7 @@
         <exec passthru="true" command="${install-command}"/>
     </target>
 
-    <target name="migrate_magento_composer" depends="composer_cc">
+    <target name="migrate_magento_composer">
         <property name="magefolder" value="${workspace}${instances.${mage}.folder}" />
         <property name="dest" value="${magefolder}/composer.json"/>
 
@@ -73,7 +73,7 @@
         </phingcall>
     </target>
 
-    <target name="migrate_composer">
+    <target name="migrate_composer" depends="composer_cc">
         <foreach list="${instances.versions}" param="mage" target="migrate_magento_composer"/>
     </target>
 
