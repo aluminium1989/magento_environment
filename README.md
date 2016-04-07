@@ -1,7 +1,8 @@
 # magento_environment
 magento testing environment
-pre-installed app: phing https://www.phing.info/trac/wiki/Users/Installation
+pre-installed app: composer
 
+0. composer update.
 1. copy build.properties.dist to build.properties
 2. leave the version which you are working on: instances.versions = magento112
 3. modify instance configuration:
